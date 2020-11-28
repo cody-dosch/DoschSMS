@@ -87,6 +87,12 @@
     <Build Include="dbo\Stored Procedures\instructorcourseassoc_insert.sql" />
     <Build Include="dbo\Stored Procedures\instructorcourseassoc_get.sql" />
     <Build Include="dbo\Stored Procedures\instructorcourseassoc_delete.sql" />
+    <Build Include="dbo\Tables\StudentCourseAssoc_2.sql" />
+    <Build Include="dbo\Stored Procedures\studentcourseassoc_list_2.sql" />
+    <Build Include="dbo\Stored Procedures\studentcourseassoc_insert_2.sql" />
+    <Build Include="dbo\Stored Procedures\studentcourseassoc_get_2.sql" />
+    <Build Include="dbo\Stored Procedures\studentcourseassoc_delete_2.sql" />
+    <Build Include="dbo\Stored Procedures\courses_update_2.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="StudentManagementSystemDB.refactorlog" />

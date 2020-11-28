@@ -198,10 +198,5 @@ namespace StudentManagementSystem.Repositories
 
             return updatedUser;
         }
-        public IUserModel DeleteUser(int userId)
-        {
-            //TODO: Implement
-            return new UserModel();
-        }
     }
 }

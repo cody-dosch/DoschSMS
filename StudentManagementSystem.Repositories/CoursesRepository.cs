@@ -228,10 +228,5 @@ namespace StudentManagementSystem.Repositories
 
             return updatedCourse;
         }
-        public ICourseModel DeleteCourse(int userId)
-        {
-            //TODO: Implement
-            return new CourseModel();
-        }
     }
 }
