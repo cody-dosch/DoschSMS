@@ -171,6 +171,9 @@ namespace StudentManagementSystem.Controllers
         {
             var viewString = ViewStrings.EditCourse;
 
+            // Populate TempData with necessary list data
+            GetListData();
+
             try
             {
                 // If model is invalid, show errors
