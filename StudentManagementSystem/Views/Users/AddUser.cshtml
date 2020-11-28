@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Add User";
+}
+
+@model StudentManagementSystem.Models.ViewModels.AddUserModel
+
+<h2 class="form-header">Add User</h2>
+
+<div class="form-wrapper">
+    @Html.Partial("~/Views/Forms/Users/AddUser.cshtml", Model ?? new StudentManagementSystem.Models.ViewModels.AddUserModel())
+</div>

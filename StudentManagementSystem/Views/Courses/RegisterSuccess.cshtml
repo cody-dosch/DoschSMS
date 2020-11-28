@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Registration";
+}
+
+@model StudentManagementSystem.Models.CourseModel
+
+<div class="form-header">
+    <h2>Registration Complete</h2>
+    <br />
+    <p>Successfully registered for <b>@Model.Department@Model.CourseNumber</b>!</p>
+    <button type="button" class="btn btn-info" name="backBtn" id="backBtn" onclick="window.location.href='@Url.Action("Catalogue", "Courses")'">Back</button>
+</div>

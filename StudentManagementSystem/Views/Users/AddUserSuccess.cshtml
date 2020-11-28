@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Add User";
+}
+
+@model StudentManagementSystem.Models.ViewModels.AddUserModel
+
+<div class="form-header">
+    <h2>Add User</h2>
+    <br />
+    <p>User successfully added!</p>
+    <button type="button" class="btn btn-info" name="backBtn" id="backBtn" onclick="window.location.href='@Url.Action("AddUser", "Users")'">Back</button>
+</div>

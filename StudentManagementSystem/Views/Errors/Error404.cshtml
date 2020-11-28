@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "404 - Page Not Found";
+}
+    <div class="form-header">
+        <h2>@ViewBag.Title</h2>
+        <h3>Sorry, this page doesn't exist!</h3>
+        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Home")'">Home</button>
+    </div>

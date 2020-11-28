@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StudentManagementSystem.Interfaces\StudentManagementSystem.Interfaces.csproj" />
+    <ProjectReference Include="..\StudentManagementSystem.Models\StudentManagementSystem.Models.csproj" />
+    <ProjectReference Include="..\StudentManagementSystem.Repositories\StudentManagementSystem.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "My Courses";
+
+    var currentUser = TempData[StudentManagementSystem.Resources.TempDataValues.CurrentUser] as StudentManagementSystem.Models.UserModel;
+    TempData.Keep(StudentManagementSystem.Resources.TempDataValues.CurrentUser);
+
+    var currentSemester = System.Configuration.ConfigurationManager.AppSettings["Semester"];
+}
+
+@model List<StudentManagementSystem.Models.ViewModels.CourseInfoModel>
+
+<h2 class="form-header">My Courses</h2>
+
+<div class="form-wrapper">    
+
+    <div class="table-wrapper">
+
+        <h3 style="margin-bottom: 20px;">Semester: @currentSemester</h3>
+
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Course Number</th>
+                    <th>Course Name</th>
+                    <th>Instructor</th>
+                    <th>Time</th>
+                    <th>Actions</th>
+                </tr>
+                @if (Model.Count > 0)
+                {
+                    foreach (var course in Model)
+                    {
+                        <tr>
+                            <td>@course.Course.Department@course.Course.CourseNumber</td>
+                            <td>@course.Course.CourseName</td>
+                            <td>@string.Format("{0} {1}", course.InstructorFirstName ?? "", course.InstructorLastName ?? "")</td>
+                            <td>@string.Format("{0} {1} - {2}", course.Course.DayOfWeek ?? "", course.Course.StartTime?.ToShortTimeString() ?? "", course.Course.EndTime?.ToShortTimeString() ?? "")</td>
+                            <td>
+                                @if (currentUser.Role == "student")
+                                {
+                                    // Display the Course Home and Drop buttons
+                                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentHome", "Courses", new { courseId = course.Course.IdCourse })'">Course Home</button>
+                                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Drop", "Courses", new { courseId = course.Course.IdCourse })'">Drop</button>
+                                }
+                                else if (currentUser.Role == "instructor")
+                                {
+                                    // Display the Course Home button
+                                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("InstructorHome", "Courses", new { courseId = course.Course.IdCourse })'">Course Home</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

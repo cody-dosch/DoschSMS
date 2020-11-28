@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Edit Course";
+
+    var departments = TempData[StudentManagementSystem.Resources.TempDataValues.Departments] as List<SelectListItem> ?? new List<SelectListItem>();
+    var instructors = TempData[StudentManagementSystem.Resources.TempDataValues.Instructors] as List<SelectListItem> ?? new List<SelectListItem>();
+    var semesters = TempData[StudentManagementSystem.Resources.TempDataValues.Semesters] as List<SelectListItem> ?? new List<SelectListItem>();
+    var daysOfWeek = TempData[StudentManagementSystem.Resources.TempDataValues.DaysOfWeek] as List<SelectListItem> ?? new List<SelectListItem>();
+
+}
+
+@model StudentManagementSystem.Models.ViewModels.EditCourseModel
+
+@using (Html.BeginForm("EditCourse", "Courses"))
+{
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                @Html.LabelFor(l => l.CourseName, "Course Name")<span class="required-star">*</span>
+                @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control", @maxlength = "64" })
+                @Html.ValidationMessageFor(m => m.CourseName, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.HiddenFor(m => m.IdCourse)
+            @Html.HiddenFor(m => m.CourseInstructorUsername)
+            @Html.HiddenFor(m => m.SeatsOpen)
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                @Html.LabelFor(l => l.CourseInstructorId, "Instructor")
+                @Html.DropDownListFor(m => m.CourseInstructorId, instructors, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(l => l.Semester, "Semester")<span class="required-star">*</span>
+                @Html.DropDownListFor(m => m.Semester, semesters, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Semester, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(l => l.SeatsMax, "Seats Available")<span class="required-star">*</span>
+                @Html.TextBoxFor(m => m.SeatsMax, new { @class = "form-control", @maxlength = "3" })
+                @Html.ValidationMessageFor(m => m.SeatsMax, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                @Html.LabelFor(l => l.StartTime, "Start Time")
+                @Html.TextBoxFor(m => m.StartTime, new { @class = "form-control", @maxlength = "10" })
+                @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(l => l.EndTime, "End Time")
+                @Html.TextBoxFor(m => m.EndTime, new { @class = "form-control", @maxlength = "10" })
+                @Html.ValidationMessageFor(m => m.EndTime, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(l => l.DayOfWeek, "Days of Week")
+                @Html.DropDownListFor(m => m.DayOfWeek, daysOfWeek, new { @class = "form-control" })
+            </div>
+
+            <input type="hidden" name="Submitted" id="Submitted" value="true" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                @Html.LabelFor(l => l.CourseDescription, "Course Description")
+                @Html.TextAreaFor(m => m.CourseDescription, new { @class = "form-control", @maxlength = "512" })
+                @Html.ValidationMessageFor(m => m.CourseDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    if (Model.ErrorMessage != null)
+    {
+        <div class="form-group row">
+            <div class="col-md-12 submit-error">
+                <div class="col-md-4">
+                    <p>@Model.ErrorMessage</p>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="form-group row">
+        <div class="col-md-12" style="margin-top: 20px;">
+            <div class="col-md-4">
+                <button type="submit" name="addCourseSubmit" class="btn btn-primary">Save</button>
+                <button type="button" name="editUserSubmit" class="btn btn-info" onclick="location.href='@Url.Action("Catalogue", "Courses")'">Back</button>
+            </div>
+        </div>
+    </div>
+}

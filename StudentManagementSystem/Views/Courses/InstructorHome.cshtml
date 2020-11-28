@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Course Home";
+
+    var currentUser = TempData[StudentManagementSystem.Resources.TempDataValues.CurrentUser] as StudentManagementSystem.Models.UserModel;
+    TempData.Keep(StudentManagementSystem.Resources.TempDataValues.CurrentUser);
+}
+
+@model StudentManagementSystem.Models.ViewModels.CourseInfoModel
+
+<h2 class="form-header">Course Home</h2>
+
+<div class="form-wrapper">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12 text-center">
+                <h3>@string.Format("{0}{1} - {2}", Model.Course.Department, Model.Course.CourseNumber, Model.Course.CourseName)</h3>
+            </div>
+        </div>
+    </div>
+
+    <hr style="border-top: 1px solid black;" />
+
+    <div class="form-group row">
+        <div class="col-md-12" style="padding-left: 30px;">
+            <div class="col-md-3 text-center participantsList">
+                <h4><b>Participants</b></h4>
+                <table class="participantsTable">
+                    @foreach (var student in Model.Participants)
+                    {
+                        <tr>
+                            <td>@string.Format("{0} {1}", student.FirstName ?? "", student.LastName ?? "")</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="col-md-9">
+                <div class="assignmentsSection">
+                    <h4><b>Assignments</b></h4>
+                    <table class="table assignmentsTable">
+                        <tr>
+                            <td>Assignment Title</td>
+                            <td>Short Description</td>
+                            <td>Due Date</td>
+                            <td>Actions</td> <!--TODO: Add Edit button on each row that goes to an EditAssignment endpoint-->
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-center"><i>No Assignments</i></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                <button type="button" name="addAssignmentBtn" class="btn btn-primary" onclick="location.href='@Url.Action("AddAssignment", "Assignments")'">Add Assignment</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12 text-center" style="padding-top: 4px;">
+                <br />
+                
+                <button type="button" name="courseDetailsBack" class="btn btn-info" onclick="location.href='@Url.Action("MyCourses", "Courses")'">Back</button>
+
+            </div>
+        </div>
+    </div>
+</div>

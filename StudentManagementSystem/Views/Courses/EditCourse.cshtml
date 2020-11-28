@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Edit Course";
+}
+
+@model StudentManagementSystem.Models.ViewModels.EditCourseModel
+
+<h2 class="form-header">Edit Course - @Model.Department@Model.CourseNumber</h2>
+
+<div class="form-wrapper">
+    @Html.Partial("~/Views/Forms/Courses/EditCourse.cshtml", Model ?? new StudentManagementSystem.Models.ViewModels.EditCourseModel())
+</div>

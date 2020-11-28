@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Home";
+
+    var currentUser = TempData[StudentManagementSystem.Resources.TempDataValues.CurrentUser] as StudentManagementSystem.Models.UserModel;
+    TempData.Keep(StudentManagementSystem.Resources.TempDataValues.CurrentUser);
+
+    var currentSemester = System.Configuration.ConfigurationManager.AppSettings["Semester"];
+}
+
+    <div class="row">
+        @if (currentUser.Role.Equals("admin", StringComparison.InvariantCultureIgnoreCase))
+        {
+            <h2 class="form-header">Admin Home</h2>
+        }
+        else if (currentUser.Role.Equals("student", StringComparison.InvariantCultureIgnoreCase))
+        {
+            <h2 class="form-header">Student Home</h2>
+        }
+        else if (currentUser.Role.Equals("instructor", StringComparison.InvariantCultureIgnoreCase))
+        {
+            <h2 class="form-header">Instructor Home</h2>
+        }
+    </div>
+
+<div class="form-wrapper">
+    <div class="row form-group">
+        <div class="col-md-12" style="padding-left: 30px;">
+            <div class="col-md-4 text-center yourInfoSection">
+                <h4><b><u>Your Info</u></b></h4>
+
+                <p><b>Username: </b>@currentUser.Username</p>
+                <p><b>Name: </b>@string.Format("{0} {1}", currentUser.FirstName ?? "", currentUser.LastName ?? "")</p>
+                <p><b>Address: </b>@string.Format("{0}, {1}, {2} {3}", currentUser.Address ?? "", currentUser.City ?? "", currentUser.State ?? "", currentUser.ZipCode ?? "")</p>
+
+                <button type="button" name="addAssignmentBtn" class="btn btn-primary" onclick="location.href='@Url.Action("EditUser", "Users")'">Edit Info</button>
+            </div>
+            <div class="col-md-4 text-center">
+                @if (currentUser.Role.Equals("admin", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    <h2>Admin Links:</h2>
+                    <p><a href="@Url.Action("Catalogue", "Courses")">Course Catalogue</a></p>
+                    <p><a href="@Url.Action("AddCourse", "Courses")">Add a Course</a></p>
+                    <p><a href="@Url.Action("AddUser", "Users")">Add a User</a></p>
+                    <p><a href="@Url.Action("Profile", "Users")">My Profile</a></p>
+                }
+                else if (currentUser.Role.Equals("student", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    <h2>Student Links:</h2>
+                    <p><a href="@Url.Action("Catalogue", "Courses")">Course Catalogue</a></p>
+                    <p><a href="@Url.Action("MyCourses", "Courses")">My Courses</a></p>
+                    <p><a href="@Url.Action("Profile", "Users")">My Profile</a></p>
+                }
+                else if (currentUser.Role.Equals("instructor", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    <h2>Instructor Links:</h2>
+                    <p><a href="@Url.Action("Catalogue", "Courses")">Course Catalogue</a></p>
+                    <p><a href="@Url.Action("MyCourses", "Courses")">My Courses</a></p>
+                    <p><a href="@Url.Action("Profile", "Users")">My Profile</a></p>
+                }
+            </div>
+            <div class="col-md-4 text-center">
+                <h2>Semester Info: </h2>
+                <h4><b>Current Semester: </b>@currentSemester</h4>
+                @if (currentUser.Role.Equals("admin", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    <h4><b># Courses Offered: </b>@ViewBag.NumCourses</h4>
+                }
+                else if (currentUser.Role.Equals("student", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    <h4><b># Courses Registered: </b>@ViewBag.NumCourses</h4>
+                }
+                else if (currentUser.Role.Equals("instructor", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    <h4><b># Courses Teaching: </b>@ViewBag.NumCourses</h4>
+                }
+            </div>
+        </div>
+    </div>
+</div>

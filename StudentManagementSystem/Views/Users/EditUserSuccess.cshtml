@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Edit Account Details";
+}
+
+@model StudentManagementSystem.Models.ViewModels.AddUserModel
+
+<div class="form-header">
+    <h2>Edit Account Details</h2>
+    <br />
+    <p>Details successfully updated!</p>
+    <button type="button" class="btn btn-info" name="backBtn" id="backBtn" onclick="window.location.href='@Url.Action("EditUser", "Users")'">Back</button>
+</div>

@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "Access Denied";
+}
+    <div class="form-header">
+        <h2>@ViewBag.Title</h2>
+        <h3>You don't have access to this page.</h3>
+        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Home")'">Home</button>
+    </div>

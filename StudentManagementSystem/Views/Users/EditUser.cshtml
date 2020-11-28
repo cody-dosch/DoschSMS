@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Edit Account Details";
+}
+
+@model StudentManagementSystem.Models.ViewModels.EditUserModel
+
+<h2 class="form-header">Edit Account Details</h2>
+<div class="form-wrapper">
+    @Html.Partial("~/Views/Forms/Users/EditUser.cshtml", Model ?? new StudentManagementSystem.Models.ViewModels.EditUserModel())
+</div>

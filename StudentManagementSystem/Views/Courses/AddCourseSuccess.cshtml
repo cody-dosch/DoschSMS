@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Add Course";
+}
+
+@model StudentManagementSystem.Models.ViewModels.AddCourseModel
+
+<div class="form-header">
+    <h2>Add Course</h2>
+    <br />
+    <p>Course successfully added!</p>
+    <button type="button" class="btn btn-info" name="backBtn" id="backBtn" onclick="window.location.href='@Url.Action("AddCourse", "Courses")'">Back</button>
+</div>

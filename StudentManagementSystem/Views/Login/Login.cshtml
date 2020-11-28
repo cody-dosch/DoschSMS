@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+    @Styles.Render("~/Content/css");
+}
+
+@model StudentManagementSystem.Models.ViewModels.LoginModel
+
+<div class="container text-center loginContainer" style="">
+    @Html.Partial("~/Views/Forms/Login/Login.cshtml", Model ?? new StudentManagementSystem.Models.ViewModels.LoginModel())
+</div>

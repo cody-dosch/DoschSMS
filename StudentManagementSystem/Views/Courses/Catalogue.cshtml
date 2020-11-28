@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Course Catalogue";
+
+    var currentUser = TempData[StudentManagementSystem.Resources.TempDataValues.CurrentUser] as StudentManagementSystem.Models.UserModel;
+    TempData.Keep(StudentManagementSystem.Resources.TempDataValues.CurrentUser);
+
+    var departments = TempData[StudentManagementSystem.Resources.TempDataValues.Departments] as List<SelectListItem> ?? new List<SelectListItem>();
+    var semesters = TempData[StudentManagementSystem.Resources.TempDataValues.Semesters] as List<SelectListItem> ?? new List<SelectListItem>();
+
+    var studentCoursesAccessible = TempData[StudentManagementSystem.Resources.TempDataValues.StudentCoursesAccessible] as List<StudentManagementSystem.Models.StudentCourseAssocModel> ?? new List<StudentManagementSystem.Models.StudentCourseAssocModel>();
+    var instructorCoursesAccessible = TempData[StudentManagementSystem.Resources.TempDataValues.InstructorCoursesAccessible] as List<StudentManagementSystem.Models.InstructorCourseAssocModel> ?? new List<StudentManagementSystem.Models.InstructorCourseAssocModel>();
+}
+
+@model List<StudentManagementSystem.Models.CourseModel>
+
+<h2 class="form-header">Course Catalogue</h2>
+
+<div class="form-wrapper">
+
+    @using (Html.BeginForm("Catalogue", "Courses"))
+    {
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    @Html.Label("Department: ")
+                    @Html.DropDownList("department", departments, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    @Html.Label("Semester: ")
+                    @Html.DropDownList("semester", semesters, new { @class = "form-control" })
+                </div>
+                <div class="col-md-1" style="padding-top: 4px;">
+                    <br />
+                    <button type="submit" name="courseCatalogueFilter" class="btn btn-primary">Filter</button>
+                </div>
+                <div class="col-md-1" style="padding-top: 4px;">
+                    <br />
+                    <button type="button" name="courseCatalogueFilter" class="btn btn-primary" onclick="location.href='@Url.Action("Catalogue", "Courses")'">Remove Filter</button>
+                </div>
+            </div>
+        </div>
+        
+    }
+
+    <div class="table-wrapper">
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Course Number</th>
+                    <th>Course Name</th>
+                    <th>Semester</th>
+                    <th>Seats Available</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var course in Model)
+                {
+                    <tr>
+                        <td>@course.Department@course.CourseNumber</td>
+                        <td>@course.CourseName</td>
+                        <td>@course.Semester</td>
+                        <td>@course.SeatsOpen</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CourseDetails", "Courses", new { courseId = course.IdCourse })'">View Details</button>
+                            @if (currentUser.Role == "admin")
+                            {
+                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("EditCourse", "Courses", new { courseId = course.IdCourse })'">Edit</button>
+                            }
+                            else if (currentUser.Role == "student")
+                            {
+                                // If the student isn't already registered for the course, display the Register button
+                                if (!studentCoursesAccessible.Any(c => c.IdCourse == course.IdCourse))
+                                {
+                                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Register", "Courses", new { courseId = course.IdCourse })'">Register</button>
+                                }
+                                else
+                                {
+                                    // Display the Course Home button
+                                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentHome", "Courses", new { courseId = course.IdCourse })'">Course Home</button>
+                                }
+                            }
+                            else if (currentUser.Role == "instructor")
+                            {
+                                // If the instructor is teaching the course, display the Course Home button
+                                if (instructorCoursesAccessible.Any(c => c.IdCourse == course.IdCourse))
+                                {
+                                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("InstructorHome", "Courses", new { courseId = course.IdCourse })'">Course Home</button>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

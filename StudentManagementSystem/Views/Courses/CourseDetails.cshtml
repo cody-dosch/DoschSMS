@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Course Details";
+
+    var currentUser = TempData[StudentManagementSystem.Resources.TempDataValues.CurrentUser] as StudentManagementSystem.Models.UserModel;
+    TempData.Keep(StudentManagementSystem.Resources.TempDataValues.CurrentUser);
+
+    var studentCoursesAccessible = TempData[StudentManagementSystem.Resources.TempDataValues.StudentCoursesAccessible] as List<StudentManagementSystem.Models.StudentCourseAssocModel> ?? new List<StudentManagementSystem.Models.StudentCourseAssocModel>();
+    var instructorCoursesAccessible = TempData[StudentManagementSystem.Resources.TempDataValues.InstructorCoursesAccessible] as List<StudentManagementSystem.Models.InstructorCourseAssocModel> ?? new List<StudentManagementSystem.Models.InstructorCourseAssocModel>();
+}
+
+@model StudentManagementSystem.Models.ViewModels.CourseInfoModel
+
+<h2 class="form-header">Course Details</h2>
+
+<div class="form-wrapper">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h3>@string.Format("{0}{1} - {2}", Model.Course.Department, Model.Course.CourseNumber, Model.Course.CourseName)</h3>
+            </div>
+        </div>
+    </div>
+
+    <hr style="border-top: 1px solid black;" />
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h4><b>Description: </b>@string.Format("{0}", Model.Course.CourseDescription ?? "")</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h4><b>Seats Available: </b>@string.Format("{0}", Model.Course.SeatsOpen)</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h4><b>Semester: </b>@string.Format("{0}", Model.Course.Semester)</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h4><b>Time: </b>@string.Format("{0} {1} - {2}", Model.Course.DayOfWeek ?? "", Model.Course.StartTime?.ToShortTimeString() ?? "", Model.Course.EndTime?.ToShortTimeString() ?? "")</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h4><b>Instructor: </b>@string.Format("{0} {1}", Model.InstructorFirstName ?? "", Model.InstructorLastName ?? "")</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12" style="padding-top: 4px;">
+                <br />
+                @if (currentUser.Role == "admin")
+                {
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("EditCourse", "Courses", new { courseId = Model.Course.IdCourse })'">Edit</button>
+                }
+                else if (currentUser.Role == "student")
+                {
+                    if (!studentCoursesAccessible.Any(c => c.IdCourse == Model.Course.IdCourse))
+                    {
+                        <button type="button" name="courseDetailsRegister" class="btn btn-primary" onclick="location.href='@Url.Action("Register", "Courses", new { courseId = Model.Course.IdCourse })'">Register</button>
+                    }
+                    else
+                    {
+                        // Display the Course Home button
+                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentHome", "Courses", new { courseId = Model.Course.IdCourse })'">Course Home</button>
+                    }
+                }
+                else if (currentUser.Role == "instructor")
+                {
+                    if (instructorCoursesAccessible.Any(c => c.IdCourse == Model.Course.IdCourse))
+                    {
+                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("InstructorHome", "Courses", new { courseId = Model.Course.IdCourse })'">Course Home</button>
+                    }
+                }
+
+                <button type="button" name="courseDetailsBack" class="btn btn-info" onclick="location.href='@Url.Action("Catalogue", "Courses")'">Back</button>
+
+            </div>
+        </div>
+    </div>
+</div>
