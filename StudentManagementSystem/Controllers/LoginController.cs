@@ -64,7 +64,7 @@ namespace StudentManagementSystem.Controllers
 
                 if (submittedPassword.Equals(requestedUser.Password))
                 {
-                    // Store the authenticated user in TempData and HttpContext and navigate to Home Page
+                    // Store the authenticated user in TempData and Session and navigate to Home Page
                     TempData[TempDataValues.CurrentUser] = requestedUser;
                     Session["User"] = requestedUser;
                     return RedirectToAction("Index", "Home");
